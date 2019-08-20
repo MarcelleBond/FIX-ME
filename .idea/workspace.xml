@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c2f27c88-4ae1-4ffe-9e56-792e2feebd24" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/Fix-Me.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Market/src/main/java/Client.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Router/src/main/java/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Market/Market.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Router/src/main/java/Router.java" beforeDir="false" afterPath="$PROJECT_DIR$/Router/src/main/java/Router.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Market/src/main/java/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Broker/src/main/java/Client.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -67,7 +60,7 @@
   <component name="RunManager" selected="Application.Client">
     <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Client" />
-      <module name="Market" />
+      <module name="Broker" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -105,7 +98,7 @@
       <option name="presentableId" value="Default" />
       <updated>1566141108607</updated>
       <workItem from="1566296141201" duration="1972000" />
-      <workItem from="1566304766159" duration="904000" />
+      <workItem from="1566304766159" duration="1356000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1566289155677</created>
@@ -114,7 +107,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566289155677</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Constant comms from client to router">
+      <created>1566305767950</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1566305767950</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -135,6 +135,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="Constant comms from client to router" />
+    <option name="LAST_COMMIT_MESSAGE" value="Constant comms from client to router" />
   </component>
 </project>

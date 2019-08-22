@@ -4,7 +4,8 @@ public class Main {
             //            @Override
             public void run() {
                 // code goes here.
-                Server router = new Server(5000);
+                Router router1 = new Router(5000);
+
             }
         });
         t1.start();
@@ -12,11 +13,10 @@ public class Main {
             //            @Override
             public void run() {
                 // code goes here.
-                Router router = new Router(5001);
+                Router router2 = new Router(5001);
             }
         });
         t2.start();
-//        Server router = new Server(5000);
-        System.out.print("Done");
+        System.out.print("Done\n");
     }
 }

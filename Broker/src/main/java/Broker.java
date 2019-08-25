@@ -63,4 +63,18 @@ public class Broker {
             System.out.println(i);
         }
     }
+
+    public void reciveMessage() {
+        String line = "";
+        // reads message from client until "Over" is sent
+        while (true) {
+            try {
+                line = serverInput.readUTF();
+                System.out.println(line);
+
+            } catch (IOException i) {
+                System.out.println(i);
+            }
+        }
+    }
 }

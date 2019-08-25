@@ -4,12 +4,13 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 
 public class Broker {
     private int id;
     // initialize socket and input output streams
     private Socket socket = null;
-    private DataInputStream userInput = null;
+    private Scanner userInput = null;
     private DataInputStream serverInput = null;
     private DataOutputStream output = null;
 
@@ -20,7 +21,7 @@ public class Broker {
             System.out.println("Connected");
 
             // takes input from terminal
-            userInput = new DataInputStream(System.in);
+            userInput = new Scanner(System.in);
 
             // gets input from the router
             serverInput = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
@@ -41,16 +42,11 @@ public class Broker {
 
     public void sendMessages() {
         String line = "";
-        System.out.print("FuckIt\n");
 
         // keep reading until "Over" is input
         while (!line.equals("Over")) {
-            System.out.print("Im in\n");
             try {
-                System.out.print("Im in try\n");
-                line = userInput.readUTF();
-                System.out.print(line);
-                System.out.print("Im pass read\n");
+                line = userInput.nextLine();
                 output.writeUTF(line);
             } catch (IOException i) {
                 System.out.println(i);

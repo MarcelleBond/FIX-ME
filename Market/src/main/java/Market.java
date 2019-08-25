@@ -4,12 +4,13 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 
 public class Market {
     private int id;
     // initialize socket and input output streams
     private Socket socket = null;
-    private DataInputStream userInput = null;
+    private Scanner userInput = null;
     private DataInputStream serverInput = null;
     private DataOutputStream output = null;
 
@@ -21,7 +22,7 @@ public class Market {
             System.out.println("Connected");
 
             // takes input from terminal
-            userInput = new DataInputStream(System.in);
+            userInput = new Scanner(System.in);
 
             // gets input from the router
             serverInput = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
@@ -45,7 +46,7 @@ public class Market {
         // keep reading until "Over" is input
         while (!line.equals("Over")) {
             try {
-                line = userInput.readUTF();
+                line = userInput.nextLine();
                 output.writeUTF(line);
             } catch (IOException i) {
                 System.out.println(i);

@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c2f27c88-4ae1-4ffe-9e56-792e2feebd24" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Market/src/main/java/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Broker/src/main/java/Client.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -98,7 +97,12 @@
       <option name="presentableId" value="Default" />
       <updated>1566141108607</updated>
       <workItem from="1566296141201" duration="1972000" />
-      <workItem from="1566304766159" duration="1356000" />
+      <workItem from="1566304766159" duration="2718000" />
+      <workItem from="1566373134431" duration="244000" />
+      <workItem from="1566813313981" duration="114000" />
+      <workItem from="1566820483406" duration="854000" />
+      <workItem from="1566893425115" duration="605000" />
+      <workItem from="1566981822644" duration="372000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1566289155677</created>
@@ -114,7 +118,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566305767950</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Constant comms from client to router">
+      <created>1566306690690</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1566306690690</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

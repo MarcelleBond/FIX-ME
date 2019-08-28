@@ -1,103 +1,35 @@
 // A Java program for a Server
+
 import java.net.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-public class Router
-{
+public class Router {
     //initialize socket and input stream
-    private Socket          socket   = null;
-    private ServerSocket    server   = null;
-    private DataInputStream in       =  null;
+    private ServerSocket server = null;
+    private HashMap<Integer, ConnectionHandler> connectionList = new HashMap<Integer, ConnectionHandler>();
+    int id = 100000;
 
     // constructor with port
-    public Router(int port)
-    {
+    public Router(int port) {
         // starts server and waits for a connection
-        try
-        {
-            server = new ServerSocket(port);
-            System.out.println("Server started");
+        try {
+            server = new ServerSocket(port,999999);
+//            System.out.println("Server started");
 
-            System.out.println("Waiting for a client ...");
+            System.out.println("Waiting for a Connections ...");
 
-            socket = server.accept();
-            System.out.println("Client accepted");
-
-            // takes input from the client socket
-            in = new DataInputStream(
-                    new BufferedInputStream(socket.getInputStream()));
-
-            String line = "";
-
-            // reads message from client until "Over" is sent
-            while (!line.equals("Over"))
-            {
-                try
-                {
-                    line = in.readUTF();
-                    System.out.println(line);
-
-                }
-                catch(IOException i)
-                {
-                    System.out.println(i);
-                }
+            while (true) {
+                ConnectionHandler c = new ConnectionHandler(server.accept(), id);
+                connectionList.put(id, c);
+                Thread t = new Thread(c);
+                t.start();
+                id++;
+                System.out.println("Request accepted");
             }
-            System.out.println("Closing connection");
-
-            // close connection
-            socket.close();
-            in.close();
-        }
-        catch(IOException i)
-        {
+        } catch (IOException i) {
             System.out.println(i);
         }
     }
-
-    public static void main(String args[])
-    {
-        Router router = new Router(5000);
-    }
 }
-
-
-
-
-//import java.io.BufferedReader;
-//import java.io.IOException;
-//import java.io.InputStreamReader;
-//import java.io.PrintStream;
-//import java.net.ServerSocket;
-//import java.net.Socket;
-//import java.net.UnknownHostException;
-//
-//public class Router {
-//    private ServerSocket RouterSocket;
-//    private Socket AcceptSocket;
-//    private BufferedReader Input;
-//    private PrintStream output;
-//
-//    public static void main(String[] args) {
-//        Router router = new Router();
-//        System.out.println("Waiting for Client");
-//        router.run();
-//    }
-//
-//    public void run() {
-//        try {
-//            RouterSocket = new ServerSocket(9999);
-//            AcceptSocket = RouterSocket.accept();
-//            output = new PrintStream(AcceptSocket.getOutputStream());
-//            output.println("Hello Client - from Server");
-//            Input = new BufferedReader(new InputStreamReader(AcceptSocket.getInputStream()));
-//            String line = "";
-//        } catch (UnknownHostException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-//}
-

@@ -4,6 +4,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Market {
@@ -13,7 +14,10 @@ public class Market {
     private Scanner userInput = null;
     private DataInputStream serverInput = null;
     private DataOutputStream output = null;
+    private ArrayList<Instrument> Instruments = new ArrayList<Instrument>();
 
+    //read instruments from list
+    //
     // constructor to put ip address and port
     public Market(String address, int port) {
         // establish a connection

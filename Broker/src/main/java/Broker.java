@@ -1,80 +1,70 @@
-import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
+import java.io.*;
+import java.net.*;
+import java.util.Scanner;
 
 public class Broker {
-    private int id;
-    // initialize socket and input output streams
-    private Socket socket = null;
-    private Scanner userInput = null;
-    private DataInputStream serverInput = null;
-    private DataOutputStream output = null;
 
+    public static void main(String[] args) throws UnknownHostException, IOException {
 
-    public Broker(String address, int port) {
-        try {
-            socket = new Socket(address, port);
-            System.out.println("Connected");
+        final Scanner scn = new Scanner(System.in);
+        final int id;
+        // getting localhost ip
+        InetAddress ip = InetAddress.getByName("localhost");
 
-            // takes input from terminal
-            userInput = new Scanner(System.in);
+        // establish the connection
+        Socket s = new Socket(ip, 5000);
 
-            // gets input from the router
-            serverInput = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-            id = Integer.parseInt(serverInput.readUTF());
+        // obtaining input and out streams
+        final DataInputStream dis = new DataInputStream(s.getInputStream());
+        id = Integer.parseInt(dis.readUTF());
+        System.out.println(id);
+        final DataOutputStream dos = new DataOutputStream(s.getOutputStream());
 
-            System.out.print(id);
-            // sends output to the socket
-            output = new DataOutputStream(socket.getOutputStream());
-        } catch (
-                UnknownHostException u) {
-            System.out.println(u);
-        } catch (
-                IOException i) {
-            System.out.println(i);
-        }
+        // sendMessage thread
+        Thread sendMessage = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
 
-    }
+                    // read the message to deliver.
+                    String msg = scn.nextLine();
 
-    public void sendMessages() {
-        String line = "";
-
-        // keep reading until "Over" is input
-        while (!line.equals("Over")) {
-            try {
-                line = userInput.nextLine();
-                output.writeUTF(line);
-            } catch (IOException i) {
-                System.out.println(i);
+                    try {
+                        // write on the output stream
+                        dos.writeUTF(id + " " + msg);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-        }
-        System.out.print("Im out\n");
-        // close the connection
-        try {
-            userInput.close();
-            serverInput.close();
-            output.close();
-            socket.close();
-        } catch (IOException i) {
-            System.out.println(i);
-        }
-    }
+        });
 
-    public void reciveMessage() {
-        String line = "";
-        // reads message from client until "Over" is sent
-        while (true) {
-            try {
-                line = serverInput.readUTF();
-                System.out.println(line);
+        // readMessage thread
+        Thread readMessage = new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-            } catch (IOException i) {
-                System.out.println(i);
+                while (true) {
+                    try {
+                        // read the message sent to this client
+                        String msg = dis.readUTF();
+                        System.out.println(msg);
+                    } catch (IOException e) {
+
+                        e.printStackTrace();
+                    }
+                }
             }
-        }
+        });
+
+        sendMessage.start();
+        readMessage.start();
     }
 }

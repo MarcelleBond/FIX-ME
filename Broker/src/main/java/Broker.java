@@ -4,6 +4,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class Broker {
@@ -76,5 +78,40 @@ public class Broker {
                 System.out.println(i);
             }
         }
+    }
+
+    public void validate_input(String input)
+    {
+         String[] split_input;
+        //buy or sell string to lower
+        //
+        //buy zar -2000 2 10001
+
+        //instrument loop through instrument list to see if it exists
+        split_input = input.trim().split(" ");
+        if (split_input[0].toLowerCase() != "buy" || split_input[0].toLowerCase() != "sell")
+        {
+            System.out.println("State weather you are buying or selling niqqah");
+        }
+
+        for (int i = 0; i < split_input[1].length(); i++) {
+            if(!Character.isDigit(split_input[1].charAt(i))) {
+                System.out.println("Invalid Price");
+            }
+        }
+
+        for (int i = 0; i < split_input[2].length(); i++) {
+            if(!Character.isDigit(split_input[2].charAt(i))) {
+                System.out.println("Invalid Quantity");
+            }
+        }
+
+        for (int i = 0; i < split_input[2].length(); i++) {
+            if(!Character.isDigit(split_input[2].charAt(i))) {
+                System.out.println("Invalid Market ID");
+            }
+        }
+
+
     }
 }

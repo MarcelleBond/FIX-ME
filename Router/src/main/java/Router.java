@@ -182,14 +182,14 @@ public class Router {
                     if (checksum) {
 
                         StringTokenizer st = new StringTokenizer(received, " ");
+                        String sender = st.nextToken();
                         String recipient = st.nextToken();
-//                        String recipient = st.nextToken(); UNCOMMENT TO GET MARKET ID INSTEAD OF BROKER ID
                         if (ar.containsKey(Integer.parseInt(recipient))) {
                             ar.get(Integer.parseInt(recipient)).dos.writeUTF(received);
                         } else if (mr.containsKey(Integer.parseInt(recipient))) {
                             mr.get(Integer.parseInt(recipient)).dos.writeUTF(received);
                         } else {
-                            System.out.println("Invalid ID");
+                            ar.get(Integer.parseInt(sender)).dos.writeUTF("INVALID ID");
                         }
                     } else {
                         System.out.println("Invalid Checksum");

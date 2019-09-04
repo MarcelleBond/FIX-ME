@@ -17,16 +17,16 @@ public class Broker {
     {
         String[] split_input = message.split(" ");
         String x = null;
-        if (split_input[0].equals("buy"))
+        if (split_input[1].equals("buy"))
         {
             x = "1";
         }
-        else if (split_input[0].equals("sell"))
+        else if (split_input[1].equals("sell"))
         {
             x = "2";
         }
-        message = " MrID 35=D 54="+x+" 55="+split_input[2] + " 38="+split_input[3] + " 40=1 44="+split_input[4] + " " + GenerateCheckSum(message);
-        System.out.println("FIXED MESSAGE: " + message);
+        message = split_input[0] + " 35=D 54="+x+" 55="+split_input[2] + " 38="+split_input[3] + " 40=1 44="+split_input[4] + " " + GenerateCheckSum(message);
+//        System.out.println("FIXED MESSAGE: " + message);
         return message;
     }
 
@@ -37,14 +37,8 @@ public class Broker {
         //split the input by spaces
         split_input = input.split(" ");
 
-        if (!split_input[0].toLowerCase().equals("buy") && !split_input[0].toLowerCase().equals("sell")) {
+        if (!split_input[1].toLowerCase().equals("buy") && !split_input[1].toLowerCase().equals("sell")) {
             System.out.println("State whether you buying or selling");
-        }
-
-        for (int i = 0; i < split_input[2].length(); i++) {
-            if (!Character.isDigit(split_input[2].charAt(i))) {
-                System.out.println("Invalid Price");
-            }
         }
 
         for (int i = 0; i < split_input[3].length(); i++) {
@@ -55,9 +49,21 @@ public class Broker {
 
         for (int i = 0; i < split_input[4].length(); i++) {
             if (!Character.isDigit(split_input[4].charAt(i))) {
-                System.out.println("Invalid Market ID");
+                System.out.println("Invalid Price");
             }
         }
+
+        for (int i = 0; i < split_input[0].length(); i++) {
+            if (!Character.isDigit(split_input[0].charAt(i))) {
+                System.out.println("Invalid MARKET ID");
+            }
+        }
+
+//        for (int i = 0; i < split_input[5].length(); i++) {
+//            if (!Character.isDigit(split_input[5].charAt(i))) {
+//                System.out.println("Invalid Market ID");
+//            }
+//        }
     }
 
     public static int GenerateCheckSum(String message) {

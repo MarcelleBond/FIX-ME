@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c2f27c88-4ae1-4ffe-9e56-792e2feebd24" name="Default Changelist" comment="" />
+    <list default="true" id="c2f27c88-4ae1-4ffe-9e56-792e2feebd24" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +40,8 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="settings.github" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
@@ -64,7 +67,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Broker">
+  <component name="RunManager" selected="Application.Market">
     <configuration name="Broker" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Broker" />
       <module name="Broker" />
@@ -102,8 +105,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Broker" />
         <item itemvalue="Application.Market" />
+        <item itemvalue="Application.Broker" />
         <item itemvalue="Application.Router" />
         <item itemvalue="Application.checkSum" />
         <item itemvalue="Application.Client2" />
@@ -131,7 +134,9 @@
       <workItem from="1567156206619" duration="1404000" />
       <workItem from="1567169021878" duration="6185000" />
       <workItem from="1567413615058" duration="4084000" />
-      <workItem from="1567429662805" duration="5878000" />
+      <workItem from="1567429662805" duration="6030000" />
+      <workItem from="1567589550423" duration="366000" />
+      <workItem from="1567602005969" duration="1525000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1566289155677</created>

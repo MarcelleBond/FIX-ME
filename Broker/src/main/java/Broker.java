@@ -1,3 +1,4 @@
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -10,6 +11,56 @@ import java.net.*;
 import java.util.Scanner;
 
 public class Broker {
+
+    public static void validate_input(String input) {
+
+        String[] split_input;
+
+        //split the input by spaces
+        split_input = input.split(" ");
+
+        if (!split_input[0].toLowerCase().equals("buy") && !split_input[0].toLowerCase().equals("sell")) {
+            System.out.println("State whether you buying or selling");
+        }
+
+        for (int i = 0; i < split_input[2].length(); i++) {
+            if (!Character.isDigit(split_input[2].charAt(i))) {
+                System.out.println("Invalid Price");
+            }
+        }
+
+        for (int i = 0; i < split_input[3].length(); i++) {
+            if (!Character.isDigit(split_input[3].charAt(i))) {
+                System.out.println("Invalid Quantity");
+            }
+        }
+
+        for (int i = 0; i < split_input[4].length(); i++) {
+            if (!Character.isDigit(split_input[4].charAt(i))) {
+                System.out.println("Invalid Market ID");
+            }
+        }
+    }
+
+    public static int GenerateCheckSum(String message) {
+        int sum = 0;
+        int length;
+        int i;
+
+        length = message.length();
+        for (i = 0; i < length; i++) {
+            int value = message.charAt(i);
+            sum += value;
+        }
+        int checkSum = sum % 256;
+        return (checkSum);
+    }
+
+    public static String checkSumEncrypt(String message) {
+        int checkSum = GenerateCheckSum(message);
+        return (message + " " + checkSum);
+    }
+
 
     public static void main(String[] args) throws UnknownHostException, IOException {
 
@@ -35,10 +86,12 @@ public class Broker {
 
                     // read the message to deliver.
                     String msg = scn.nextLine();
+                    validate_input(msg);
+                    String msg2 = checkSumEncrypt(msg);
 
                     try {
                         // write on the output stream
-                        dos.writeUTF(id + " " + msg);
+                        dos.writeUTF(id + " " + msg2);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -67,4 +120,5 @@ public class Broker {
         sendMessage.start();
         readMessage.start();
     }
+
 }

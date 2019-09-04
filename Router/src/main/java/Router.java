@@ -209,8 +209,33 @@ public class Router {
             }
         }
 
-        private boolean checksumEncryption(String received) {
-            return true;
+        public int GenerateCheckSum(String message, int length) {
+            int sum = 0;
+            int i;
+
+            for (i = 0; i < length; i++) {
+                int value = message.charAt(i);
+                sum += value;
+            }
+            int checkSum = sum % 256;
+            return (checkSum);
+        }
+
+        public String checkSumEncrypt(String message) {
+            int checkSum = GenerateCheckSum(message, message.length());
+            return (message + " " + checkSum);
+        }
+
+        private boolean checksumEncryption(String message) {
+            String substring = message.substring(0, message.length() - 4);
+            String message1 = checkSumEncrypt(substring);
+            int checkSum = GenerateCheckSum(substring, message.length() - 4);
+            String[] splitMessage = message.split(" ");
+
+            if (message1.contains(Integer.toString(checkSum))) {
+                return true;
+            }
+            return false;
         }
     }
 }

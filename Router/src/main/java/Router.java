@@ -183,6 +183,7 @@ public class Router {
 
                         StringTokenizer st = new StringTokenizer(received, " ");
                         String recipient = st.nextToken();
+//                        String recipient = st.nextToken(); UNCOMMENT TO GET MARKET ID INSTEAD OF BROKER ID
                         if (ar.containsKey(Integer.parseInt(recipient))) {
                             ar.get(Integer.parseInt(recipient)).dos.writeUTF(received);
                         } else if (mr.containsKey(Integer.parseInt(recipient))) {
@@ -227,9 +228,8 @@ public class Router {
         }
 
         private boolean checksumEncryption(String message) {
-            String substring = message.substring(0, message.length() - 4);
-            String message1 = checkSumEncrypt(substring);
-            int checkSum = GenerateCheckSum(substring, message.length() - 4);
+            String message1 = checkSumEncrypt(message.substring(0, message.length() - 4));
+            int checkSum = GenerateCheckSum(message.substring(0, message.length() - 4), message.length() - 4);
             String[] splitMessage = message.split(" ");
 
             if (message1.contains(Integer.toString(checkSum))) {

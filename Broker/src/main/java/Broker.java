@@ -12,6 +12,24 @@ import java.util.Scanner;
 
 public class Broker {
 
+
+    public static String fix_notation(String message)
+    {
+        String[] split_input = message.split(" ");
+        String x = null;
+        if (split_input[0].equals("buy"))
+        {
+            x = "1";
+        }
+        else if (split_input[0].equals("sell"))
+        {
+            x = "2";
+        }
+        message = " MrID 35=D 54="+x+" 55="+split_input[2] + " 38="+split_input[3] + " 40=1 44="+split_input[4] + " " + GenerateCheckSum(message);
+        System.out.println("FIXED MESSAGE: " + message);
+        return message;
+    }
+
     public static void validate_input(String input) {
 
         String[] split_input;
@@ -88,7 +106,7 @@ public class Broker {
                     String msg = scn.nextLine();
                     validate_input(msg);
                     String msg2 = checkSumEncrypt(msg);
-
+                    msg2 = fix_notation(msg);
                     try {
                         // write on the output stream
                         dos.writeUTF(id + " " + msg2);

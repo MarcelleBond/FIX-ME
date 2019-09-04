@@ -12,7 +12,6 @@
     <artifactId>Market</artifactId>
     <packaging>jar</packaging>
 
-
     <build>
         <plugins>
             <plugin>
@@ -23,7 +22,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>Main</mainClass>
+                            <mainClass>Market</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -182,13 +182,14 @@ public class Router {
                     if (checksum) {
 
                         StringTokenizer st = new StringTokenizer(received, " ");
+                        String sender = st.nextToken();
                         String recipient = st.nextToken();
                         if (ar.containsKey(Integer.parseInt(recipient))) {
                             ar.get(Integer.parseInt(recipient)).dos.writeUTF(received);
                         } else if (mr.containsKey(Integer.parseInt(recipient))) {
                             mr.get(Integer.parseInt(recipient)).dos.writeUTF(received);
                         } else {
-                            System.out.println("Invalid ID");
+                            ar.get(Integer.parseInt(sender)).dos.writeUTF("INVALID ID");
                         }
                     } else {
                         System.out.println("Invalid Checksum");
@@ -209,37 +210,32 @@ public class Router {
             }
         }
 
-        private boolean checksumEncryption(String received) {
-            return true;
+        public int GenerateCheckSum(String message, int length) {
+            int sum = 0;
+            int i;
+
+            for (i = 0; i < length; i++) {
+                int value = message.charAt(i);
+                sum += value;
+            }
+            int checkSum = sum % 256;
+            return (checkSum);
         }
-    }
 
-    public int  GenerateCheckSum(String message, int length) {
-        int sum = 0;
-        int i;
-
-        for (i = 0; i < length; i++) {
-            int value = message.charAt(i);
-            sum += value;
+        public String checkSumEncrypt(String message) {
+            int checkSum = GenerateCheckSum(message, message.length());
+            return (message + " " + checkSum);
         }
-        int checkSum = sum % 256;
-        return(checkSum);
-    }
 
+        private boolean checksumEncryption(String message) {
+            String message1 = checkSumEncrypt(message.substring(0, message.length() - 4));
+            int checkSum = GenerateCheckSum(message.substring(0, message.length() - 4), message.length() - 4);
+            String[] splitMessage = message.split(" ");
 
-    public boolean checkCheckSum(String message) {
-        //String message1 = checkSumEncrypt(message);
-
-        int checkSum = GenerateCheckSum(message, message.length());
-        String[] splitMessage = message.split(" ");
-
-       // String lastWord = message.substring(message.lastIndexOf(" ")+1);
-
-        String removelastword = message.substring(message.lastIndexOf(" ") - 1);
-
-        if (message.contains(Integer.toString(checkSum))) {
-            return true;
+            if (message1.contains(Integer.toString(checkSum))) {
+                return true;
+            }
+            return false;
         }
-        return false;
     }
 }

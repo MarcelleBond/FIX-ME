@@ -5,12 +5,17 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 
 public class Broker {
+
+    private static ArrayList<String> List_of_instuments;
+    private static ArrayList<String> IdList;
+
 
 
     public static String fix_notation(String message)
@@ -30,40 +35,93 @@ public class Broker {
         return message;
     }
 
-    public static void validate_input(String input) {
-
-        String[] split_input;
-
-        //split the input by spaces
-        split_input = input.split(" ");
-
-        if (!split_input[1].toLowerCase().equals("buy") && !split_input[1].toLowerCase().equals("sell")) {
+    public static String validate_input() {
+        final Scanner scn = new Scanner(System.in);
+        String final_string = "";
+        List_of_instuments = new ArrayList<String>();
+        List_of_instuments.add("zar");
+        List_of_instuments.add("IBM");
+        List_of_instuments.add("USD");
+        List_of_instuments.add("MAC");
+        IdList = new ArrayList<String>();
+        IdList.add("100000");
+        IdList.add("100001");
+        IdList.add("100002");
+        IdList.add("100003");
+        // Market id input
+        while (true)
+        {
+            System.out.println("Enter Market ID you want to buy from?");
+            String msg = scn.nextLine();
+            if (IdList.contains(msg))
+            {
+                final_string += msg;
+                break ;
+            }
+            System.out.println("Enter Valid Market ID");
+        }
+        // Buying or selling
+        while (true)
+        {
+            System.out.println("Are you buying or selling?");
+            String msg1 = scn.nextLine();
+            if (msg1.toLowerCase().equals("buy") || msg1.toLowerCase().equals("sell"))
+            {
+                final_string += " " + msg1;
+                break ;
+            }
             System.out.println("State whether you buying or selling");
         }
-
-        for (int i = 0; i < split_input[3].length(); i++) {
-            if (!Character.isDigit(split_input[3].charAt(i))) {
-                System.out.println("Invalid Quantity");
+        // Instrument list
+        while (true)
+        {
+            System.out.println("Enter instrument you want to buy?");
+            String msg2 = scn.nextLine();
+            if (List_of_instuments.contains(msg2))
+            {
+                final_string += " " + msg2;
+                break ;
             }
+            System.out.println("Enter Valid instrument");
         }
-
-        for (int i = 0; i < split_input[4].length(); i++) {
-            if (!Character.isDigit(split_input[4].charAt(i))) {
-                System.out.println("Invalid Price");
+        // Quantity
+        while (true)
+        {
+            System.out.println("Enter Quantity?");
+            int x = 1;
+            String msg3 = scn.nextLine();
+            for (int i = 0; i < msg3.length(); i++) {
+                if (!Character.isDigit(msg3.charAt(i))) {
+                    System.out.println("Invalid Quantity");
+                    x = 0;
+                }
             }
-        }
-
-        for (int i = 0; i < split_input[0].length(); i++) {
-            if (!Character.isDigit(split_input[0].charAt(i))) {
-                System.out.println("Invalid MARKET ID");
+            if (x == 1)
+            {
+                final_string += " " + msg3;
+                break ;
             }
+            //System.out.println("Invalid Quantity");
         }
-
-//        for (int i = 0; i < split_input[5].length(); i++) {
-//            if (!Character.isDigit(split_input[5].charAt(i))) {
-//                System.out.println("Invalid Market ID");
-//            }
-//        }
+        // Price
+        while (true)
+        {
+            System.out.println("Enter Price?");
+            int x = 1;
+            String msg4 = scn.nextLine();
+            for (int i = 0; i < msg4.length(); i++) {
+                if (!Character.isDigit(msg4.charAt(i))) {
+                    System.out.println("Invalid Price");
+                    x = 0;
+                }
+            }
+            if (x == 1) {
+                final_string += " " + msg4;
+                break;
+            }
+            //System.out.println("Invalid Quantity");
+        }
+        return final_string;
     }
 
     public static int GenerateCheckSum(String message) {
@@ -109,13 +167,13 @@ public class Broker {
                 while (true) {
 
                     // read the message to deliver.
-                    String msg = scn.nextLine();
-                    validate_input(msg);
-                    String msg2 = checkSumEncrypt(msg);
-                    msg2 = fix_notation(msg);
+                    //String msg = scn.nextLine();
+                    String msg = validate_input();
+                    msg = checkSumEncrypt(msg);
+                    msg = fix_notation(msg);
                     try {
                         // write on the output stream
-                        dos.writeUTF(id + " " + msg2);
+                        dos.writeUTF(id + " " + msg);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

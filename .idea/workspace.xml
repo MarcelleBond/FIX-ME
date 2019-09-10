@@ -107,9 +107,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Router" />
         <item itemvalue="Application.Market" />
         <item itemvalue="Application.Broker" />
+        <item itemvalue="Application.Router" />
         <item itemvalue="Application.checkSum" />
         <item itemvalue="Application.Client2" />
       </list>
@@ -138,7 +138,8 @@
       <workItem from="1567413615058" duration="4084000" />
       <workItem from="1567429662805" duration="6030000" />
       <workItem from="1567589550423" duration="366000" />
-      <workItem from="1567602005969" duration="3634000" />
+      <workItem from="1567602005969" duration="3850000" />
+      <workItem from="1568104655300" duration="831000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1566289155677</created>

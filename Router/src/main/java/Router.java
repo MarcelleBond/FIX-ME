@@ -45,6 +45,8 @@ public class Router {
         }
 
         public void run() {
+            while (true){
+
             try {
                 m = ssMarket.accept();
             } catch (IOException e) {
@@ -76,11 +78,21 @@ public class Router {
             // Create a new Thread with this object.
             Thread t = new Thread(mtch);
             System.out.println("Adding this Market to active Market list");
-
             // add this client to active clients list
             mr.put(id, mtch);
+            for (Map.Entry<Integer, ClientHandler> brokerKey : ar.entrySet()) {
+                for (Map.Entry<Integer, ClientHandler> MarketKey : mr.entrySet()) {
+                    try {
+                        ar.get(brokerKey.getKey()).dos.writeUTF( "Available Market ID: " + MarketKey.getKey());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
             id++;
             t.start();
+            }
         }
 
     }
@@ -97,44 +109,52 @@ public class Router {
         }
 
         public void run() {
+            while (true) {
+                try {
+                    s = ss.accept();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-            try {
-                s = ss.accept();
-            } catch (IOException e) {
-                e.printStackTrace();
+                DataInputStream dis = null;
+                try {
+                    dis = new DataInputStream(s.getInputStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                DataOutputStream dos = null;
+                try {
+                    dos = new DataOutputStream(s.getOutputStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Creating a new handler for this Broker...");
+
+                // Create a new handler object for handling this request.
+                try {
+                    dos.writeUTF(Integer.toString(id));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ClientHandler mtch = new ClientHandler(s, id, dis, dos);
+
+                // Create a new Thread with this object.
+                Thread t = new Thread(mtch);
+                System.out.println("Adding this Broker to active Broker list");
+
+                // add this client to active clients list
+                ar.put(id, mtch);
+                for (Map.Entry<Integer, ClientHandler> MarketKey : mr.entrySet()) {
+                    try {
+                        ar.get(id).dos.writeUTF( "Available Market ID: " + MarketKey.getKey());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                id++;
+                t.start();
             }
-
-            DataInputStream dis = null;
-            try {
-                dis = new DataInputStream(s.getInputStream());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            DataOutputStream dos = null;
-            try {
-                dos = new DataOutputStream(s.getOutputStream());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            System.out.println("Creating a new handler for this Broker...");
-
-            // Create a new handler object for handling this request.
-            try {
-                dos.writeUTF(Integer.toString(id));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            ClientHandler mtch = new ClientHandler(s, id, dis, dos);
-
-            // Create a new Thread with this object.
-            Thread t = new Thread(mtch);
-            System.out.println("Adding this Broker to active Broker list");
-
-            // add this client to active clients list
-            ar.put(id, mtch);
-            id++;
-            t.start();
-
         }
 
     }

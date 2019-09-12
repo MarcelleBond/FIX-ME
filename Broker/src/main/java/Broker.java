@@ -42,7 +42,8 @@ public class Broker {
         List_of_instuments.add("zar");
         List_of_instuments.add("IBM");
         List_of_instuments.add("USD");
-        List_of_instuments.add("MAC");
+        List_of_instuments.add("wethinkcode");
+        List_of_instuments.add("usdjpy");
         IdList = new ArrayList<String>();
         IdList.add("100000");
         IdList.add("100001");

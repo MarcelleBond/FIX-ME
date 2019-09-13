@@ -9,7 +9,7 @@ public class Router {
     // Vector to store active clients
     static HashMap<Integer, ClientHandler> ar = new HashMap<Integer, ClientHandler>();
     static HashMap<Integer, ClientHandler> mr = new HashMap<Integer, ClientHandler>();
-
+    static String InstrumentList = "";
     // counter for Brokers
     static int i = 0;
     // counter for markets
@@ -80,16 +80,16 @@ public class Router {
             System.out.println("Adding this Market to active Market list");
             // add this client to active clients list
             mr.put(id, mtch);
-            for (Map.Entry<Integer, ClientHandler> brokerKey : ar.entrySet()) {
-                for (Map.Entry<Integer, ClientHandler> MarketKey : mr.entrySet()) {
-                    try {
-                        ar.get(brokerKey.getKey()).dos.writeUTF( "Available Market ID: " + MarketKey.getKey());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
+//            for (Map.Entry<Integer, ClientHandler> brokerKey : ar.entrySet()) {
+//                for (Map.Entry<Integer, ClientHandler> MarketKey : mr.entrySet()) {
+//                    try {
+//                        ar.get(brokerKey.getKey()).dos.writeUTF( "Available Market ID: " + MarketKey.getKey());
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//            }
             id++;
             t.start();
             }
@@ -147,10 +147,18 @@ public class Router {
                 for (Map.Entry<Integer, ClientHandler> MarketKey : mr.entrySet()) {
                     try {
                         ar.get(id).dos.writeUTF( "Available Market ID: " + MarketKey.getKey());
+                        if (!InstrumentList.isEmpty()) {
+                            ar.get(id).dos.writeUTF(InstrumentList);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
+                }
+                try {
+                    ar.get(id).dos.writeUTF("end");
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
                 id++;
                 t.start();
@@ -204,14 +212,15 @@ public class Router {
                         String recipient = st.nextToken();
                     if (checksum) {
                         if (recipient.equals("of")) {
-                            for (Map.Entry<Integer, ClientHandler> brokerKey : ar.entrySet()) {
-                                try {
-                                    ar.get(brokerKey.getKey()).dos.writeUTF(received);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-
-                            }
+                            InstrumentList = received;
+//                            for (Map.Entry<Integer, ClientHandler> brokerKey : ar.entrySet()) {
+//                                try {
+//                                    ar.get(brokerKey.getKey()).dos.writeUTF(received);
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                }
+//
+//                            }
                         }
                         else if (ar.containsKey(Integer.parseInt(recipient))) {
                             ar.get(Integer.parseInt(recipient)).dos.writeUTF(received);
@@ -267,7 +276,7 @@ public class Router {
 //            System.out.println("MESSAGE1: "+ message1);
             int checkSum = GenerateCheckSum(message.substring(0, message.length() - 4));
             String[] splitMessage = message.split(" ");
-            System.out.println(checkSum + " :: <<<< checksum");
+            //System.out.println(checkSum + " :: <<<< checksum");
 
             if (message1.contains(Integer.toString(checkSum))) {
                 return true;

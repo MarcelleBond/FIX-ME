@@ -54,18 +54,28 @@ public class Instruments {
         this.instrumentType = instrumentType;
     }
 
-    public void buy(int qty){
-        this.qty -= qty;
-        this.price += (qty/2);
+    public int buy(int qty, int price){
+        if(price == this.price) {
+            this.qty -= qty;
+            this.price += (qty / 2);
+            return 1;
+        }else{
+            return 0;
+        }
     }
 
-    public void sell(int qty){
-        this.qty += qty;
-        this.price -= (qty/2);
+    public int sell(int qty, int price) {
+        if (price == this.price) {
+            this.qty += qty;
+            this.price -= (qty / 2);
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     public String printDetails(){
-        String insString = "\nID: " + this.id + " | Name: " + this.name+ " | Price " + this.price + " | Qty: " + this.qty;
+        String insString = "\nID: " + this.id + " | Name: " + this.name+ " | Price " + this.price + " | Qty: " + this.qty + "\n";
         return insString;
     }
 

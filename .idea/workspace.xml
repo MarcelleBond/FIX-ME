@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c2f27c88-4ae1-4ffe-9e56-792e2feebd24" name="Default Changelist" comment="Checksum validated, need market id from broker">
-      <change afterPath="$PROJECT_DIR$/Market/src/main/java/Instruments.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Router/src/main/java/Instruments.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Broker/src/main/java/Broker.java" beforeDir="false" afterPath="$PROJECT_DIR$/Broker/src/main/java/Broker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Market/src/main/java/Instruments.java" beforeDir="false" afterPath="$PROJECT_DIR$/Market/src/main/java/Instruments.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Market/src/main/java/Market.java" beforeDir="false" afterPath="$PROJECT_DIR$/Market/src/main/java/Market.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Router/src/main/java/Router.java" beforeDir="false" afterPath="$PROJECT_DIR$/Router/src/main/java/Router.java" afterDir="false" />
     </list>
@@ -50,14 +50,14 @@
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/Router/src/main/java" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="" />
     </key>
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Router/src/main/java" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -110,8 +110,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Market" />
         <item itemvalue="Application.Broker" />
+        <item itemvalue="Application.Market" />
         <item itemvalue="Application.Router" />
         <item itemvalue="Application.checkSum" />
         <item itemvalue="Application.Client2" />
@@ -143,7 +143,9 @@
       <workItem from="1567589550423" duration="366000" />
       <workItem from="1567602005969" duration="3850000" />
       <workItem from="1568104655300" duration="3977000" />
-      <workItem from="1568281714003" duration="10502000" />
+      <workItem from="1568281714003" duration="10695000" />
+      <workItem from="1568363489721" duration="4405000" />
+      <workItem from="1568376762477" duration="7828000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1566289155677</created>
@@ -196,79 +198,39 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Router/src/main/java/Router.java</url>
-          <line>223</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Router/src/main/java/Router.java</url>
-          <line>185</line>
+          <line>193</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Market/src/main/java/Market.java</url>
-          <line>125</line>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Market/src/main/java/Market.java</url>
-          <line>75</line>
+          <line>89</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Market/src/main/java/Market.java</url>
-          <line>141</line>
-          <option name="timeStamp" value="29" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Router/src/main/java/Router.java</url>
-          <line>200</line>
-          <option name="timeStamp" value="30" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Router/src/main/java/Router.java</url>
-          <line>203</line>
-          <option name="timeStamp" value="34" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Router/src/main/java/Router.java</url>
-          <line>215</line>
-          <option name="timeStamp" value="35" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Router/src/main/java/Router.java</url>
-          <line>216</line>
-          <option name="timeStamp" value="36" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Router/src/main/java/Router.java</url>
-          <line>220</line>
-          <option name="timeStamp" value="38" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Router/src/main/java/Router.java</url>
-          <line>225</line>
+          <line>234</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Router/src/main/java/Router.java</url>
-          <line>226</line>
+          <line>235</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/Market/src/main/java/Market.java</url>
-          <line>103</line>
-          <properties class="Market" method="executeOrder">
+          <url>file://$PROJECT_DIR$/Broker/src/main/java/Broker.java</url>
+          <line>187</line>
+          <properties class="Broker" method="main">
             <option name="EMULATED" value="true" />
           </properties>
-          <option name="timeStamp" value="10" />
+          <option name="timeStamp" value="53" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/Router/src/main/java/Router.java</url>
-          <line>263</line>
-          <properties class="Router.ClientHandler">
+          <url>file://$PROJECT_DIR$/Broker/src/main/java/Broker.java</url>
+          <line>30</line>
+          <properties class="Broker" method="Market_list">
             <option name="EMULATED" value="true" />
           </properties>
-          <option name="timeStamp" value="44" />
+          <option name="timeStamp" value="56" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

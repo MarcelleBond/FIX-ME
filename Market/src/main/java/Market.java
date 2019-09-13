@@ -10,17 +10,25 @@ public class Market {
 
     private static ArrayList<Instruments> instrumentList = new ArrayList<Instruments>();
     private static HashMap<String, Instruments> insList = new HashMap<String, Instruments>();
+
     public static void main(String[] args) throws UnknownHostException, IOException {
 
 
-
-        Instruments weThinkCOde = new Instruments(1,"wethinkcode", 100, 69, "STOCK");
-        Instruments usdjpy = new Instruments(2,"usdjpy", 655, 12, "CURRENCY");
+        Instruments weThinkCOde = new Instruments(1, "wethinkcode", 100, 69, "STOCK");
+        Instruments Vans = new Instruments(2, "Vans", 100, 420, "STOCK");
+        Instruments Apple = new Instruments(3, "Apple", 100, 666, "STOCK");
+        Instruments AllStar = new Instruments(4, "AllStar", 100, 786, "STOCK");
+        Instruments Loverlab = new Instruments(5, "Loverlab", 100, 333, "STOCK");
+        Instruments usdjpy = new Instruments(6, "usdjpy", 655, 12, "CURRENCY");
 
 
         //instrumentList.add(weThinkCOde);
         //instrumentList.add(usdjpy);
         insList.put(weThinkCOde.getName(), weThinkCOde);
+        insList.put(Vans.getName(), Vans);
+        insList.put(Apple.getName(), Apple);
+        insList.put(AllStar.getName(), AllStar);
+        insList.put(Loverlab.getName(), Loverlab);
         insList.put(usdjpy.getName(), usdjpy);
         final Scanner scn = new Scanner(System.in);
 
@@ -36,10 +44,17 @@ public class Market {
 
         // sendMessage thread
         //initial instrument list message
-        dos.writeUTF("List of Instruments:\n"+"ID: "+weThinkCOde.getId()+ " Name: " +weThinkCOde.getName()+ " Price: "+ weThinkCOde.getPrice() +"\n"+usdjpy.getName());
+        String instrumentList = "List of Instruments";
+        for (Map.Entry<String, Instruments> instrument : insList.entrySet()) {
+            instrumentList += instrument.getValue().printDetails();
+        }
+        try {
+            dos.writeUTF(instrumentList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        Thread sendMessage = new Thread(new Runnable()
-        {
+        Thread sendMessage = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true) {
@@ -47,7 +62,7 @@ public class Market {
                     //forward instrument list
 
                     // read the message to deliver.
-                 //   String msg = scn.nextLine();
+                    //   String msg = scn.nextLine();
 
                     try {
                         // write on the output stream
@@ -60,8 +75,7 @@ public class Market {
         });
 
         // readMessage thread
-        Thread readMessage = new Thread(new Runnable()
-        {
+        Thread readMessage = new Thread(new Runnable() {
             @Override
             public void run() {
 
@@ -70,7 +84,7 @@ public class Market {
                         // read the message sent to this client
                         String msg = dis.readUTF();
 //                        //check if its initial message from server
-                        if(msg.length() > 6){
+                        if (msg.length() > 6) {
                             //validate && execute  Order
                             String[] fixedOrder = validateOrder(msg);
                             String resMsg = executeOrder(fixedOrder);
@@ -88,12 +102,12 @@ public class Market {
             }
         });
 
-     //   sendMessage.start();
+        //   sendMessage.start();
         readMessage.start();
     }
 
     //validate order
-    public static String[] validateOrder(String msg){
+    public static String[] validateOrder(String msg) {
         //check FIX notation
         String[] message = msg.split(" ");
         return message;
@@ -101,17 +115,18 @@ public class Market {
 
     //execute order
     //hashmap shit
-    public static String executeOrder(String[] order){
+    public static String executeOrder(String[] order) {
         String response = "";
-
 
 
         //id=
         String id = order[0];
+        String myID = order[1];
         //35= new order
         String neworder = order[2].substring(order[2].indexOf("=") + 1); //always D
         //54= buy or sell
-        String buysell = order[3].substring(order[3].indexOf("=") + 1); ; //1 or 2
+        String buysell = order[3].substring(order[3].indexOf("=") + 1);
+        ; //1 or 2
         //55= instrumentID
         String instrumentID = order[4].substring(order[4].indexOf("=") + 1);
         //38= quantity
@@ -123,41 +138,63 @@ public class Market {
         //checksum
         String checksum = order[8];
 
-        if(buysell.equals("1")){
+        if (buysell.equals("1")) {
             //buy order
             //check availability
-            if(insList.get(instrumentID).getQty() >= qty) {
+            if (insList.get(instrumentID).getQty() >= qty) {
 
                 //actual buy
-                insList.get(instrumentID).buy(qty);
+                int buyResult = insList.get(instrumentID).buy(qty, Integer.parseInt(price));
+                String res = myID + " " + id + " Buy successful!";
 
-                        String res = "100000 " + id +  " Purchase successful!";
+                if (buyResult == 0) {
+                   String  instrumentList =  myID + " " + id + " Order Rejected, Incorrect Price.\n List of Instruments:\n";
+                    for (Map.Entry<String, Instruments> instrument : insList.entrySet()) {
+                        instrumentList += instrument.getValue().printDetails();
+                    }
+                    return instrumentList;
+                }
+
+
                 Iterator<Map.Entry<String, Instruments>> it = insList.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry<String, Instruments> pair = it.next();
                     res += pair.getValue().printDetails();
                 }
-                return res + " " + GenerateCheckSum(res) ;
-            }else{
+                return res + " " + GenerateCheckSum(res);
+            } else {
                 String res = "";
                 Iterator<Map.Entry<String, Instruments>> it = insList.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry<String, Instruments> pair = it.next();
-                    res += pair.getValue().printDetails() + " " + GenerateCheckSum(res);
+                    res += pair.getValue().printDetails()  + GenerateCheckSum(res);
                 }
                 // STOP HARD CODING THE MARKET ID
-                return " 500000 " + id + " Instrument quantity not available.\n List of Instruments:\n" + res;
+                String  instrumentList =  myID + " " + id + " Instrument quantity not available.\n List of Instruments:\n";
+                for (Map.Entry<String, Instruments> instrument : insList.entrySet()) {
+                    instrumentList += instrument.getValue().printDetails();
+                }
+                return instrumentList;
             }
-        }else if(buysell.equals("2")){
+        } else if (buysell.equals("2")) {
             //sell order
-            insList.get(instrumentID).sell(qty);
-            String res = "";
+            int sellResult = insList.get(instrumentID).sell(qty, Integer.parseInt(price));
+            String res = myID + " " + id + " Sell successful!";
+
+            if (sellResult == 0) {
+                String  instrumentList =  myID + " " + id + " Order Rejected, Incorrect Price.\n List of Instruments:\n";
+                for (Map.Entry<String, Instruments> instrument : insList.entrySet()) {
+                    instrumentList += instrument.getValue().printDetails();
+                }
+                return instrumentList;
+            }
+
             Iterator<Map.Entry<String, Instruments>> it = insList.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry<String, Instruments> pair = it.next();
                 res += pair.getValue().printDetails();
             }
-            return res + " " + GenerateCheckSum(res) ;
+            return res + " " + GenerateCheckSum(res);
         }
 
         return response;
@@ -176,8 +213,6 @@ public class Market {
         int checkSum = sum % 256;
         return (checkSum);
     }
-
-
 
 
 }

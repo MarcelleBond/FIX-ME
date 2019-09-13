@@ -10,13 +10,53 @@ import java.util.Scanner;
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
+import java.util.StringTokenizer;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+
 
 public class Broker {
 
-    private static ArrayList<String> List_of_instuments;
-    private static ArrayList<String> IdList;
+    private static ArrayList<String> List_of_instruments = new ArrayList<String>();;
+    private static ArrayList<String> IdList= new ArrayList<String>();
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_BLUE = "\u001B[34m";
 
+//    List_of_instuments =
 
+    public static void Market_list(String message)
+    {
+        String[] split;
+        String[] split2;
+        int i = 1;
+        if (message.contains("Name"))
+        {
+            split = message.split("\n");
+            while (i < split.length)
+            {
+                if (split[i].contains("Name")) {
+                    StringTokenizer st = new StringTokenizer(split[i], "|");
+                    String ID = st.nextToken();
+                    String name = st.nextToken();
+               List_of_instruments.add(name.substring(name.indexOf(":") + 2, name.length() - 1));
+               System.out.println(name.substring(name.indexOf(":") + 2, name.length() - 1));
+
+                }
+                i++;
+            }
+        }
+    }
+    public static void Market_id(String message)
+    {
+        if (message.contains("Market ID"))
+        {
+            IdList.add(message.substring(message.length() - 6, message.length()));
+        }
+    }
 
     public static String fix_notation(String message)
     {
@@ -38,62 +78,62 @@ public class Broker {
     public static String validate_input() {
         final Scanner scn = new Scanner(System.in);
         String final_string = "";
-        List_of_instuments = new ArrayList<String>();
-        List_of_instuments.add("zar");
-        List_of_instuments.add("IBM");
-        List_of_instuments.add("USD");
-        List_of_instuments.add("wethinkcode");
-        List_of_instuments.add("usdjpy");
-        IdList = new ArrayList<String>();
-        IdList.add("100000");
-        IdList.add("100001");
-        IdList.add("100002");
-        IdList.add("100003");
+//        List_of_instuments = new ArrayList<String>();
+//        List_of_instuments.add("zar");
+//        List_of_instuments.add("IBM");
+//        List_of_instuments.add("USD");
+//        List_of_instuments.add("MAC");
+//        List_of_instuments.add("wethinkcode");
+//        IdList = new ArrayList<String>();
+//        IdList.add("100000");
+//        IdList.add("100001");
+//        IdList.add("100002");
+//        IdList.add("100003");
         // Market id input
         while (true)
         {
-            System.out.println("Enter Market ID you want to buy from?");
+            System.out.println(ANSI_GREEN + "Enter Market ID?" + ANSI_RESET);
             String msg = scn.nextLine();
             if (IdList.contains(msg))
             {
                 final_string += msg;
                 break ;
             }
-            System.out.println("Enter Valid Market ID");
+            System.out.println(ANSI_RED + "Enter Valid Market ID" + ANSI_RESET);
         }
         // Buying or selling
         while (true)
         {
-            System.out.println("Are you buying or selling?");
+            System.out.println(ANSI_GREEN + "Buy or Sell?" + ANSI_RESET);
             String msg1 = scn.nextLine();
             if (msg1.toLowerCase().equals("buy") || msg1.toLowerCase().equals("sell"))
             {
                 final_string += " " + msg1;
                 break ;
             }
-            System.out.println("State whether you buying or selling");
+            System.out.println(ANSI_RED + "State Whether Buy or Sell" + ANSI_RESET);
         }
         // Instrument list
         while (true)
         {
-            System.out.println("Enter instrument you want to buy?");
+            System.out.println(ANSI_GREEN + "Enter Instrument?" + ANSI_RESET);
             String msg2 = scn.nextLine();
-            if (List_of_instuments.contains(msg2))
+            if (List_of_instruments.contains(msg2))
             {
                 final_string += " " + msg2;
                 break ;
             }
-            System.out.println("Enter Valid instrument");
+            System.out.println(ANSI_RED + "Enter Valid instrument" + ANSI_RESET);
         }
         // Quantity
         while (true)
         {
-            System.out.println("Enter Quantity?");
+            System.out.println(ANSI_GREEN + "Enter Quantity?" + ANSI_RESET);
             int x = 1;
             String msg3 = scn.nextLine();
             for (int i = 0; i < msg3.length(); i++) {
                 if (!Character.isDigit(msg3.charAt(i))) {
-                    System.out.println("Invalid Quantity");
+                    System.out.println(ANSI_RED + "Invalid Quantity" + ANSI_RESET);
                     x = 0;
                 }
             }
@@ -107,12 +147,12 @@ public class Broker {
         // Price
         while (true)
         {
-            System.out.println("Enter Price?");
+            System.out.println(ANSI_GREEN + "Enter Price?" + ANSI_RESET);
             int x = 1;
             String msg4 = scn.nextLine();
             for (int i = 0; i < msg4.length(); i++) {
                 if (!Character.isDigit(msg4.charAt(i))) {
-                    System.out.println("Invalid Price");
+                    System.out.println(ANSI_RED + "Invalid Price" + ANSI_RESET);
                     x = 0;
                 }
             }
@@ -160,9 +200,23 @@ public class Broker {
         id = Integer.parseInt(dis.readUTF());
         System.out.println(id);
         final DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+//        int i = 0;
+        
+        while(true) {
+            String string = dis.readUTF();
+            Market_id(string);
+            Market_list(string);
+            if (string.equals("end")){
+                break;
+            }
+            System.out.println(string);
+        }
+
 
         // sendMessage thread
-        Thread sendMessage = new Thread(new Runnable() {
+        ExecutorService executor = Executors.newFixedThreadPool(1);
+
+        executor.submit(new Runnable() {
             @Override
             public void run() {
                 while (true) {
@@ -178,20 +232,10 @@ public class Broker {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
-            }
-        });
-
-        // readMessage thread
-        Thread readMessage = new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                while (true) {
                     try {
                         // read the message sent to this client
-                        String msg = dis.readUTF();
-                        System.out.println(msg);
+                        String response = dis.readUTF();
+                        System.out.println(response);
                     } catch (IOException e) {
 
                         e.printStackTrace();
@@ -199,9 +243,32 @@ public class Broker {
                 }
             }
         });
+//        Thread sendMessage = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//            }
+//        });
 
-        sendMessage.start();
-        readMessage.start();
+        // readMessage thread
+//        Thread readMessage = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                while (true) {
+//                    try {
+//                        // read the message sent to this client
+//                        String msg = dis.readUTF();
+//                        System.out.println(msg);
+//                    } catch (IOException e) {
+//
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        });
+
+//        sendMessage.start();
+//        readMessage.start();
     }
 
 }

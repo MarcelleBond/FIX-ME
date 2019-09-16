@@ -60,7 +60,6 @@ public class Market {
                 while (true) {
 
                     //forward instrument list
-
                     // read the message to deliver.
                     //   String msg = scn.nextLine();
 
